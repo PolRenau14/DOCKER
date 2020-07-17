@@ -1,0 +1,17 @@
+If we add these lines to compose:
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+
+  any changes done in code will be changed without need to rebild container
+
+  For remove container and volumes
+
+  docker-compose down --volumes
+
+Can pass multiple variables doing this:
+
+web:
+  env_file:
+    - web-variables.env

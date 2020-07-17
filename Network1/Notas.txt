@@ -1,0 +1,39 @@
+docker run -dit --name alpine1 alpine ash
+docker run -dit --name alpine2 alpine ash
+
+docker network inspect <name_network(bydefault: bridge)>
+\-> will apear containers that are in this network and their IP.
+\-> u can connect to one of one containers
+\\\---->> docker attach <nameContainer>
+here u can ping to google with
+\-> ping -c 2 google.com
+And
+\-> ping -c 2 172.17.0.3 (other ip container)
+\\\\\---> But at this moment ping -c 2 <other_container_name> don't works
+
+*********************************************
+*    ITS better to configure own network    *
+*********************************************
+docker network create --driver bridge alpine-net
+
+*********************************************
+*    Create diferent containers in network  *
+*********************************************
+docker run -dit --name alpine1 --network alpine-net alpine ash
+docker run -dit --name alpine2 --network alpine-net alpine ash
+docker run -dit --name alpine3 alpine ash
+docker run -dit --name alpine4 --network alpine-net alpine ash
+
+# connect alpine4 to bridge as alpine 3.
+docker network connect bridge alpine4
+
+On users-definded networks like alpine-net can acces using container name
+
+docker container attach alpine1
+
+ping -c 2 alpine2
+
+We cant connect to alpine1 to alpine3, because they are in diferent networks
+
+alpine 4 can reach all containers, cause it is on both networks, but cant acces to
+alpine3 using container's name.
