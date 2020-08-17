@@ -1,0 +1,8 @@
+# Search which proces are listening
+sudo netstat -tulpn | grep 80
+
+# stop proces listening
+sudo systemctl stop apache2
+
+#start
+sudo systemctl start apache2

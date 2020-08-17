@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  container1-service:
+    image: container1-service
+    build: ./Container1/.
+    container_name: container1-service
+    restart: on-failure

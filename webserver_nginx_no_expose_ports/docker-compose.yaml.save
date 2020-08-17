@@ -1,0 +1,50 @@
+version: "3.3"
+
+services:
+  reverse-proxy:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 433:433
+
+
+    depends_on
+	- weather-report
+ # generates weather reports
+  weather-report:
+    image: weather-report
+    container_name: weather-report
+    build:
+      context: ./weather_report
+    depends_on: # generates weather reports
+  weather-report:
+    image: weather-report
+    container_name: weather-report
+    build:
+      context: ./weather_report
+    depends_on:
+        - temperature-service
+        - precip-service
+    ports:
+      - 8080:80
+    restart: on-failure
+
+    ports:
+	-80
+    restart: on-failure
+
+  rfm-service:
+    image: rfm-service
+    build: ./Container1/.
+    container_name: rfm-service
+    restart: on-failure
+
+
+
+  recomendation-service:
+    image: recomendation-service
+    build: ./Container2/.
+    container_name: recomendation-service
+    restart: on-failure
