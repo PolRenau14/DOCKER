@@ -1,0 +1,19 @@
+# After create all machines with these command
+sudo docker-machine create -d virtualbox <nombreMachine>
+
+# we should orquestrate all work, for do this que enter to manager node.
+sudo docker-machine ssh manager
+
+# Activate Swarm in Machine: (maager)
+sudo docker swarm init --advertise-addr <ip_Machine>
+
+# Activate swarm on workers
+# enter on worker nodes
+# and use this command, : (RESULTING OF  PREVIOUS COMMAND ACTIVATE MANAGER)
+docker swarm join --token SWMTKN-1-2jh592z57xyinsy2zahrxga3eqgnn5nn7xclhixavdzvcvhoue-2g2dbma07anpccun3vd53i9wc 192.168.99.102:2377
+
+# Connect to manager
+eval $(sudo docker-machine env manager)
+
+# execute service in manager
+

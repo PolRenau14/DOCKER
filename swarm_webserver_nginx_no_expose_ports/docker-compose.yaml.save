@@ -8,43 +8,43 @@ services:
     ports:
       - 80:80
       - 433:433
-    networks:
-      - front
-    depends_on:
-      - weather-report
 
-  #generates weather reports
+
+    depends_on
+	- weather-report
+ # generates weather reports
+  weather-report:
+    image: weather-report
+    container_name: weather-report
+    build:
+      context: ./weather_report
+    depends_on: # generates weather reports
   weather-report:
     image: weather-report
     container_name: weather-report
     build:
       context: ./weather_report
     depends_on:
-        - rfm-service
-        - recomendation-service
-    networks:
-      - front
-      - back
+        - temperature-service
+        - precip-service
+    ports:
+      - 8080:80
+    restart: on-failure
+
+    ports:
+	-80
     restart: on-failure
 
   rfm-service:
     image: rfm-service
     build: ./Container1/.
     container_name: rfm-service
-    networks:
-      - back
     restart: on-failure
+
+
 
   recomendation-service:
     image: recomendation-service
     build: ./Container2/.
     container_name: recomendation-service
-    networks:
-      - back
     restart: on-failure
-
-networks:
-  front:
-    driver: bridge
-  back:
-    driver: bridge
