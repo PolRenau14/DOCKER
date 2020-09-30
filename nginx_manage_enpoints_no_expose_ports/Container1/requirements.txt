@@ -1,4 +1,5 @@
+uWSGI==2.0.19
 numpy==1.18.3
 requests==2.18.4
 pandas==1.0.3
-flask
+Flask==1.0.2

@@ -1,10 +1,11 @@
-FROM python:3.6.10-slim-stretch
-WORKDIR /usr/src/app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt && apt-get update && apt-get install -y wget curl
+FROM python:3.7-slim-stretch
+WORKDIR /app
 
-COPY . .
+ADD . /app
+RUN apt-get update
+RUN apt-get install -y gcc
+RUN pip install -r requirements.txt
 
-EXPOSE 5001
 
-CMD [ "python", "./Api.py" ]
+# Start uwsgi
+CMD [ "uwsgi", "app.ini" ]

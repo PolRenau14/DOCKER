@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  reverse-proxy:
+  reverse-proxy_test:
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
@@ -17,6 +17,10 @@ services:
     image: rfm-service
     build: ./Container1/.
     container_name: rfm-service
+    environment:
+      - APP_NAME = Bgrup_RFM
+    expose: 
+      - 8080
     restart: on-failure
 
 
